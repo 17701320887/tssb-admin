@@ -57,12 +57,6 @@ $(function () {
         var flag = true;
         clearErrorTip();
         if(LoginisNotNull(username,pwd)){
-            if (!IsDuiaEmail(username)) {
-                    loginErrTip.html("请填写对啊网员工的263邮箱账号!");
-                    loginErrTip.show();
-                    userDivError.addClass("has-error");
-                    flag = false;
-            }
             if(flag){
                 loginBtn.html("登录中,请稍后!");
                 data = {"email": username, "password":pwd,"isrem":isrem};

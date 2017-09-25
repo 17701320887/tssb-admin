@@ -37,8 +37,9 @@
 		<where>id = #{id}</where>
 	</update>-->
 	
-	<select id="findById" resultType="String">
+	<select id="findById" resultType="String" parameterType="Long">
 		select r.name
 		from role r
+		where r.id=#{id}
 	</select>
 </mapper>

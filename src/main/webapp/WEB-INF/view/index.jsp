@@ -92,7 +92,7 @@
 <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/js/apps.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/apps.js"></script>
 <script src="${pageContext.request.contextPath}/resources/base/login/js/login.js"></script>
 <script src="${pageContext.request.contextPath}/resources/common/utils/js/utils.js"></script>
 <script>
