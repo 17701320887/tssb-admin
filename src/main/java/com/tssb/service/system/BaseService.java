@@ -17,24 +17,66 @@ public abstract class BaseService<T extends Serializable,PK extends Serializable
     @Autowired
     protected IBaseDao<T, PK> iBaseDao;
 
-    @Override
+    public BaseService() {
+    }
+
+    public <T> T load(PK id) {
+        return this.iBaseDao.load(id);
+    }
+
+    public <T> T find(PK id) {
+        return this.iBaseDao.find(id);
+    }
+
     public void save(T t) {
         this.iBaseDao.save(t);
     }
 
-    @Override
     public void update(T t) {
         this.iBaseDao.update(t);
     }
 
-    @Override
     public void delete(PK id) {
-       this.iBaseDao.delete(id);
+        this.iBaseDao.delete(id);
     }
 
-    @Override
     public void deleteByIds(PK[] ids) {
-       this.iBaseDao.deleteByIds(ids);
+        this.iBaseDao.deleteByIds(ids);
     }
 
+    public <T> T one(String queryKey) {
+        return this.iBaseDao.one(queryKey);
+    }
+
+    public <T> T one(String queryKey, Object param) {
+        return this.iBaseDao.one(queryKey, param);
+    }
+
+    public Object one(Class clazz, String queryKey) {
+        return this.iBaseDao.one(clazz, queryKey);
+    }
+
+    public Object one(Class clazz, String queryKey, Object param) {
+        return this.iBaseDao.one(clazz, queryKey, param);
+    }
+
+    public <T> List<T> search(T t) {
+        return this.iBaseDao.search(t);
+    }
+
+    public <T> List<T> list(String queryKey) {
+        return this.iBaseDao.list(queryKey);
+    }
+
+    public List list(Class clazz, String queryKey) {
+        return this.iBaseDao.list(clazz, queryKey);
+    }
+
+    public <T> List<T> list(String queryKey, Object param) {
+        return this.iBaseDao.list(queryKey, param);
+    }
+
+    public List list(Class clazz, String queryKey, Object param) {
+        return this.iBaseDao.list(clazz, queryKey, param);
+    }
 }

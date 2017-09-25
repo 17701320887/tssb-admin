@@ -1,5 +1,7 @@
 package com.tssb.dao.api;
 
+import com.tssb.model.BaseEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,14 +9,33 @@ import java.util.List;
  * Created by wangsongpeng on 2015/11/4.
  */
 public interface IBaseDao<T extends Serializable,PK extends Serializable> {
-    void save(T t);
+    <T> T load(PK var1);
 
-    void update(T t);
+    <T> T find(PK var1);
 
-    void delete(PK id);
+    void save(T var1);
 
-    void deleteByIds(PK[] ids);
+    void update(T var1);
+
+    void delete(PK var1);
+
+    void deleteByIds(PK[] var1);
+
+    <T> T one(String var1);
+
+    <T> T one(String var1, Object var2);
+
+    Object one(Class var1, String var2);
+
+    Object one(Class var1, String var2, Object var3);
+
+    <T> List<T> list(String var1);
+
+    <T> List<T> list(String var1, Object var2);
+
+    List list(Class var1, String var2);
+
+    List list(Class var1, String var2, Object var3);
 
     <T> List<T> search(T var1);
-
 }

@@ -59,15 +59,14 @@ $(function () {
         if(LoginisNotNull(username,pwd)){
             if(flag){
                 loginBtn.html("登录中,请稍后!");
-                data = {"email": username, "password":pwd,"isrem":isrem};
+                data = {"name": username, "password":pwd,"isrem":isrem};
                 $.ajax({
                     url: urls,
                     type: "post",
                     dataType: "json",
-                    cache: false,
-                    async: false,
                     data : data,
                     success: function (datas) {
+                        console.log(datas);
                         loginBtn.html("登录");
                         if (datas.success) {
                             window.location.href = path+"/"

@@ -1,113 +1,103 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
 <%@include file="/WEB-INF/view/common/include/taglib.jsp" %>
+<%-- 浏览器兼容问题 --%>
 <!DOCTYPE html>
+<%--[if IE 8]> <html lang="en" class="ie8"> <![endif]--%>
+<%--[if !IE]><%--%>
 <html lang="en">
+<%--<![endif]--%>
 <head>
-    <title>对啊网管理系统-员工管理</title>
-    <link href="${pageContext.request.contextPath}/resources/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/assets/plugins/DataTables/extensions/Select/css/select.bootstrap.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/resources/common/switch/css/bootstrap-switch.min.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <title>天山时报+管理系统登录</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/resources/assets/css/style.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/resources/assets/css/style-responsive.min.css" rel="stylesheet" />
 </head>
-<body>
-<div>
-    <div class="row">
-        <div class="col-md-10" style="width:100%;">
-            <div class="panel panel-inverse">
-                <div class="panel-heading">
-                    <div class="panel-heading-btn">
-                        <%--     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>--%>
-                    </div>
-                    <h4 class="panel-title">员工列表</h4>
-                </div>
-                <div class="panel-body">
-                    <form class="form-inline">
+<body class="pace-top bg-white">
+<input id="path" type="hidden" value="${pageContext.request.contextPath}" >
+<%-- begin #page-loader --%>
+<div id="page-loader" class="fade in"><span class="spinner"></span></div>
+<%-- end #page-loader --%>
 
-                        <div class="alert alert-danger" id="error_alert" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            失败
-                        </div>
-
-                        <div class="alert alert-success" id="success_alert" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            成功
-                        </div>
-
-
-
-                        <div class="form-group m-r-10">
-                            <input type="text" class="form-control"  style="width:220px;" id="userEmail" placeholder="员工邮箱" />
-                        </div>
-                        <div class="form-group m-r-10">
-                            <input type="text" class="form-control" style="width:220px;" id="userMobile" placeholder="员工手机" />
-                        </div>
-                        <div class="form-group m-r-10">
-                            <input type="text" class="form-control"  style="width:220px;"  id="userNum" placeholder="员工工号" />
-                        </div>
-                        <div class="form-group  m-r-10" >
-                            <div class="input-group">
-                                <input  readonly="readonly" class="form-control" style="width:220px;" id="createDate" placeholder="创建日期">
-                                <span class="input-group-btn">
-									   <button disabled id="showCreateBtn" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-									</span>
-                            </div>
-                        </div>
-                        <div class="form-group m-r-10">
-                            <select id="userStatus" class="form-control">
-                                <option value="-1">--员工状态--</option>
-                                <option value="1">在职</option>
-                                <option value="0">离职</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-info m-r-5" id="find">查询</button>
-                        <button type="button" data-toggle="modal" href="#user-create-alert"  class="btn btn-sm btn-primary m-r-5" id="createUser">新增</button>
-                    </form>
-                </div>
-                <div class="panel-body">
-                    <table id="user-table" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>员工编号</th>
-                            <th>姓名</th>
-                            <th>邮箱</th>
-                            <th>手机</th>
-                            <th>工号</th>
-                            <th>性别</th>
-                            <th>在职状态</th>
-                            <th>最后一次修改人</th>
-                            <th>创建时间</th>
-                            <th>最后一次修改时间</th>
-                            <th>最后一次登录时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
+<%-- begin #page-container --%>
+<div id="page-container" class="fade">
+    <%-- begin login --%>
+    <div class="login login-with-news-feed">
+        <%-- begin news-feed --%>
+        <div class="news-feed">
+            <div class="news-image">
+                <img src="${pageContext.request.contextPath}/resources/assets/img/login-bg/bg-7.jpg" data-id="login-cover-image" alt="" />
+            </div>
+            <div class="news-caption">
+                <h4 class="caption-title"><i class="fa fa-diamond text-success"></i> 天山时报+</h4>
+                <p>
+                    对啊网,中国专业的职业在线教育平台,提供职业教育类免费视频,在线直播课程,在线题库,在线论坛,帮助每一位职场人士重塑职业未来,成就职业梦想!
+                </p>
             </div>
         </div>
+        <%-- end news-feed --%>
+        <%-- begin right-content --%>
+        <div class="right-content">
+            <%-- begin login-header --%>
+            <div class="login-header">
+                <div class="brand">
+                    <span class="logo"></span> 天山时报+
+                    <small>让学习,触手可及</small>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-sign-in"></i>
+                </div>
+            </div>
+            <%-- end login-header --%>
+            <%-- begin login-content --%>
+            <div class="login-content">
+                <form id="loginform" action="/check/user" class="margin-bottom-0">
+                    <div id="user_div" class="form-group m-b-15">
+                        <input id="user_input" type="text" class="form-control input-lg" placeholder="用户名"  />
+                    </div>
+                    <div id="pwd_div" class="form-group m-b-15">
+                        <input id="user_pwd" type="password" class="form-control input-lg" placeholder="密码" />
+                    </div>
+                    <div class="checkbox m-b-30">
+                        <label>
+                            <input id="remember" type="checkbox" /> 记住我(保持一周)
+                        </label>
+                    </div>
+                    <p id="login_error_tip" style="font-size:15px;display:block;height:15px;;" class="text-danger">
+
+                    </p>
+                    <div class="login-buttons">
+                        <button id="login_btn" type="button" class="btn btn-success btn-block bt n-lg">登录</button>
+                    </div>
+                    <div class="m-t-20 m-b-40 p-b-40">
+                        <%-- 可以填写文字  --%>
+                    </div>
+                    <hr />
+                    <p class="text-center text-inverse">
+                        &copy; 天山时报+管理系统 V1.0
+                    </p>
+                </form>
+            </div>
+            <%-- end login-content --%>
+        </div>
+        <%-- end right-container --%>
     </div>
+    <%-- end login --%>
 </div>
-<%@include file="/WEB-INF/view/base/authority/user_dialog.jsp" %>
-<script src="${pageContext.request.contextPath}/resources/assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/plugins/DataTables/extensions/Select/js/dataTables.select.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-daterangepicker/moment.js"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="${pageContext.request.contextPath}/resources/common/switch/js/bootstrap-switch.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/common/utils/js/tool.date.js"></script>
-<script src="${pageContext.request.contextPath}/resources/base/auth/js/user.js"></script>
+<%-- end page container --%>
+<script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/apps.js"></script>
+<script src="${pageContext.request.contextPath}/resources/base/login/js/login.js"></script>
+<script src="${pageContext.request.contextPath}/resources/common/utils/js/utils.js"></script>
 <script>
-    var userTable;
-    $(document).ready(function () {
-        $("#find").click(function () {
-            userTable.ajax.reload();
-        });
+    $(document).ready(function() {
+        App.init();
     });
 </script>
 </body>

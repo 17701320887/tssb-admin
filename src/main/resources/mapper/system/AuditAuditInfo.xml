@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tssb.dao.IAuditAuditInfoDao">
+	<resultMap type="AuditAuditInfo" id="auditAuditInfoResultMap">
+		<result property="id" column="id" />
+		<result property="auditId" column="audit_id" />
+		<result property="auditInfoId" column="audit_info_id" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		id,
+		audit_id,
+		audit_info_id
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{auditId},
+		#{auditInfoId}
+	</sql>
+	
+	<!-- 闁倻鏁ゆ禍搴濆瘜闁款喛鍤滄晶鐐佃閸拷-->
+	<insert id="save" parameterType="AuditAuditInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into audit_audit_info( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+	
+	<delete id="deleteByIds">
+		delete from audit_audit_info
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="AuditAuditInfo">
+		update audit_audit_info 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="auditId != null and auditId != ''">audit_id = #{auditId},</if>
+			<if test="auditInfoId != null and auditInfoId != ''">audit_info_id = #{auditInfoId},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<select id="findById" resultMap="auditAuditInfoResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from audit_audit_info
+		where id = #{id}
+	</select>
+	
+	<select id="queryAll" resultMap="auditAuditInfoResultMap">
+		select <include refid="table_columns" /> 
+		from audit_audit_info
+	</select>
+	
+	<!-- 娴ｈ法鏁ike閻€劍纭堕敍姝漮lumnName like concat('%',#columnName#,'%') -->
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="auditId != null and auditId != ''">and audit_id = #{auditId}</if>
+			<if test="auditInfoId != null and auditInfoId != ''">and audit_info_id = #{auditInfoId}</if>
+		</trim>
+	</sql>
+	
+	<select id="search" resultMap="auditAuditInfoResultMap" parameterType="AuditAuditInfo">
+		select <include refid="table_columns" />
+		from audit_audit_info
+		<include refid="page_where" />
+	</select>
+	
+	<select id="page" resultMap="auditAuditInfoResultMap" parameterType="AuditAuditInfo">
+		select <include refid="table_columns" />
+		from audit_audit_info
+		<include refid="page_where" />
+		limit #{firstIndex},#{pageSize}
+	</select>
+
+    <select id="count" resultType="long" parameterType="AuditAuditInfo">
+        select count(id) from audit_audit_info
+        <include refid="page_where" />
+    </select>
+
+	<!-- 閸忔湹绮懛顏勭暰娑斿QL -->
+	
+</mapper>
