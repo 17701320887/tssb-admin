@@ -68,8 +68,8 @@ $(function () {
                     success: function (datas) {
                         console.log(datas);
                         loginBtn.html("登录");
-                        if (datas.success) {
-                            window.location.href = path+"/"
+                        if (datas == "200") {
+                            window.location.href = path+"/system/userList";
                         } else{
                             loginErrTip.html(datas.message);
                             loginErrTip.show();

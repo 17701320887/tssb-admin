@@ -14,6 +14,6 @@ import com.tssb.dao.api.IUsersDao;
 public class UsersDao extends BaseDao<Users,Long> implements IUsersDao {
     @Override
     public Users findByName(String name) {
-        return this.one("findByName");
+        return this.one("findByName",name);
     }
 }

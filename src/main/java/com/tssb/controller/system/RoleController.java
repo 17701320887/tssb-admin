@@ -31,10 +31,18 @@ public class RoleController {
 
 	@ResponseBody
 	@RequestMapping(value = "/check/user",method = RequestMethod.POST)
-	public Object checkUser(String name){
+	public Object checkUser(String name,String password){
 		try {
 			Users user = usersService.findByName(name);
-			return "200";
+			if(user!=null){
+				if(user.getPassword().equals(password)){
+					return "200";
+				}else{
+					return "201";
+				}
+			}else{
+				return "404";
+			}
 		}catch (Exception ex){
 			System.out.println(ex);
 			return "500";
