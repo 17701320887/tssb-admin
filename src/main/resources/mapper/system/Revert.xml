@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tssb.dao.RevertDao">
+	<resultMap type="Revert" id="revertResultMap">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="revertDate" column="revert_date" />
+		<result property="revertUser" column="revert_user" />
+		<result property="deleteFlag" column="delete_flag" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		id,
+		content,
+		revert_date,
+		revert_user,
+		delete_flag
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{content},
+		#{revertDate},
+		#{revertUser},
+		#{deleteFlag}
+	</sql>
+	
+	<!-- 闁倻鏁ゆ禍搴濆瘜闁款喛鍤滄晶鐐佃閸拷-->
+	<insert id="save" parameterType="Revert" useGeneratedKeys="true" keyProperty="id">
+		insert into revert( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+	
+	<delete id="deleteByIds">
+		delete from revert
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="Revert">
+		update revert 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="content != null and content != ''">content = #{content},</if>
+			<if test="revertDate != null and revertDate != ''">revert_date = #{revertDate},</if>
+			<if test="revertUser != null and revertUser != ''">revert_user = #{revertUser},</if>
+			<if test="deleteFlag != null and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<select id="findById" resultMap="revertResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from revert
+		where id = #{id}
+	</select>
+	
+	<select id="queryAll" resultMap="revertResultMap">
+		select <include refid="table_columns" /> 
+		from revert
+	</select>
+	
+	<!-- 娴ｈ法鏁ike閻€劍纭堕敍姝漮lumnName like concat('%',#columnName#,'%') -->
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="content != null and content != ''">and content = #{content}</if>
+			<if test="revertDate != null and revertDate != ''">and revert_date = #{revertDate}</if>
+			<if test="revertUser != null and revertUser != ''">and revert_user = #{revertUser}</if>
+			<if test="deleteFlag != null and deleteFlag != ''">and delete_flag = #{deleteFlag}</if>
+		</trim>
+	</sql>
+	
+	<select id="search" resultMap="revertResultMap" parameterType="Revert">
+		select <include refid="table_columns" />
+		from revert
+		<include refid="page_where" />
+	</select>
+	
+	<select id="page" resultMap="revertResultMap" parameterType="Revert">
+		select <include refid="table_columns" />
+		from revert
+		<include refid="page_where" />
+		limit #{firstIndex},#{pageSize}
+	</select>
+
+    <select id="count" resultType="long" parameterType="Revert">
+        select count(id) from revert
+        <include refid="page_where" />
+    </select>
+
+	<!-- 閸忔湹绮懛顏勭暰娑斿QL -->
+	
+</mapper>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="tssb-web-admin:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="tssb.war">
+      <element id="artifact" artifact-name="tssb-web-admin:war exploded" />
+    </root>
+  </artifact>
+</component>

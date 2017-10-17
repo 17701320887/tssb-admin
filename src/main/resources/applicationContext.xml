@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"   
+    xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd 
+    http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/cache 
+	http://www.springframework.org/schema/cache/spring-cache.xsd"
+	default-autowire="byName" default-lazy-init="true">
+	
+	<context:component-scan base-package="com.tssb"/>
+
+
+	<context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+
+	<!--数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="10" />
+        <property name="minIdle" value="${maxIdle}" />
+        <property name="maxActive" value="${maxActive}" />
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${maxWait}" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="false" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
+    </bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mapper/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:mapper/system/*.xml" />
+	</bean>
+
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+    <bean id="pollingConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+        <!--整个连接池的并发-->
+        <property name="maxTotal" value="1000" />
+        <!--每个主机的并发-->
+        <property name="defaultMaxPerRoute" value="1000" />
+    </bean>
+
+    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
+        <property name="connectionManager" ref="pollingConnectionManager" />
+        <!--开启重试-->
+        <property name="retryHandler">
+            <bean class="org.apache.http.impl.client.DefaultHttpRequestRetryHandler">
+                <constructor-arg value="2"/>
+                <constructor-arg value="true"/>
+            </bean>
+        </property>
+        <property name="defaultHeaders">
+            <list>
+                <bean class="org.apache.http.message.BasicHeader">
+                    <constructor-arg value="User-Agent"/>
+                    <constructor-arg value="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.16 Safari/537.36"/>
+                </bean>
+                <bean class="org.apache.http.message.BasicHeader">
+                    <constructor-arg value="Accept-Encoding"/>
+                    <constructor-arg value="gzip,deflate"/>
+                </bean>
+                <bean class="org.apache.http.message.BasicHeader">
+                    <constructor-arg value="Accept-Language"/>
+                    <constructor-arg value="zh-CN"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build" />
+
+    <bean id="clientHttpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="httpClient"/>
+        <!--连接超时时间，毫秒-->
+        <property name="connectTimeout" value="5000"/>
+        <!--读写超时时间，毫秒-->
+        <property name="readTimeout" value="10000"/>
+    </bean>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="clientHttpRequestFactory" />
+    </bean>
+
+    <!-- 发送短信的线程池 -->
+    <bean id="sendSmsThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"  init-method="initialize" destroy-method="destroy">
+        <!-- 线程池核心线程数量-->
+        <property name="corePoolSize" value="5"/>
+        <!-- 线程池维护线程的时间 1分钟清除,线程数量不能低于核心线程数 -->
+        <property name="keepAliveSeconds" value="60"/>
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="100"/>
+        <!-- 缓存队列数量 -->
+        <property name="queueCapacity" value="100"/>
+        <!-- 线程池中线程组的名称 -->
+        <property name="threadGroupName" value="sendSms"/>
+        <!-- 短信线程的前缀 -->
+        <property name="threadNamePrefix" value="pay"/>
+    </bean>
+
+    <!-- 发送系统信息的线程池 -->
+    <bean id="sendClassSysNoticeThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"  init-method="initialize" destroy-method="destroy">
+        <!-- 线程池核心线程数量-->
+        <property name="corePoolSize" value="5"/>
+        <!-- 线程池维护线程的时间 1分钟清除,线程数量不能低于核心线程数 -->
+        <property name="keepAliveSeconds" value="60"/>
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="100"/>
+        <!-- 缓存队列数量 -->
+        <property name="queueCapacity" value="100"/>
+        <!-- 线程池中线程组的名称 -->
+        <property name="threadGroupName" value="sendClassSysNotice"/>
+        <!-- 系统信息线程的前缀 -->
+        <property name="threadNamePrefix" value="notice"/>
+    </bean>
+
+    <!-- 云信接口的线程池 -->
+    <bean id="sendYxThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor"  init-method="initialize" destroy-method="destroy">
+        <!-- 线程池核心线程数量-->
+        <property name="corePoolSize" value="5"/>
+        <!-- 线程池维护线程的时间 1分钟清除,线程数量不能低于核心线程数 -->
+        <property name="keepAliveSeconds" value="60"/>
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="100"/>
+        <!-- 缓存队列数量 -->
+        <property name="queueCapacity" value="100"/>
+        <!-- 线程池中线程组的名称 -->
+        <property name="threadGroupName" value="sendYx"/>
+        <!-- 短信线程的前缀 -->
+        <property name="threadNamePrefix" value="yunxin"/>
+    </bean>
+
+</beans>

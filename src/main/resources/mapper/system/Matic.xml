@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tssb.dao.IMaticDao">
+	<resultMap type="Matic" id="maticResultMap">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="topStatus" column="top_status" />
+		<result property="sticeStatus" column="stice_status" />
+		<result property="createUser" column="create_user" />
+		<result property="createDate" column="create_date" />
+		<result property="modifyUser" column="modify_user" />
+		<result property="modifyDate" column="modify_date" />
+		<result property="deleteFlag" column="delete_flag" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		id,
+		title,
+		content,
+		top_status,
+		stice_status,
+		create_user,
+		create_date,
+		modify_user,
+		modify_date,
+		delete_flag
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{title},
+		#{content},
+		#{topStatus},
+		#{sticeStatus},
+		#{createUser},
+		#{createDate},
+		#{modifyUser},
+		#{modifyDate},
+		#{deleteFlag}
+	</sql>
+	
+	<!-- 闁倻鏁ゆ禍搴濆瘜闁款喛鍤滄晶鐐佃閸拷-->
+	<insert id="save" parameterType="Matic" useGeneratedKeys="true" keyProperty="id">
+		insert into matic( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+	
+	<delete id="deleteByIds">
+		delete from matic
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="Matic">
+		update matic 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="title != null and title != ''">title = #{title},</if>
+			<if test="content != null and content != ''">content = #{content},</if>
+			<if test="topStatus != null and topStatus != ''">top_status = #{topStatus},</if>
+			<if test="sticeStatus != null and sticeStatus != ''">stice_status = #{sticeStatus},</if>
+			<if test="createUser != null and createUser != ''">create_user = #{createUser},</if>
+			<if test="createDate != null and createDate != ''">create_date = #{createDate},</if>
+			<if test="modifyUser != null and modifyUser != ''">modify_user = #{modifyUser},</if>
+			<if test="modifyDate != null and modifyDate != ''">modify_date = #{modifyDate},</if>
+			<if test="deleteFlag != null and deleteFlag != ''">delete_flag = #{deleteFlag},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<select id="findById" resultMap="maticResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from matic
+		where id = #{id}
+	</select>
+	
+	<select id="queryAll" resultMap="maticResultMap">
+		select <include refid="table_columns" /> 
+		from matic
+	</select>
+	
+	<!-- 娴ｈ法鏁ike閻€劍纭堕敍姝漮lumnName like concat('%',#columnName#,'%') -->
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="title != null and title != ''">and title = #{title}</if>
+			<if test="content != null and content != ''">and content = #{content}</if>
+			<if test="topStatus != null and topStatus != ''">and top_status = #{topStatus}</if>
+			<if test="sticeStatus != null and sticeStatus != ''">and stice_status = #{sticeStatus}</if>
+			<if test="createUser != null and createUser != ''">and create_user = #{createUser}</if>
+			<if test="createDate != null and createDate != ''">and create_date = #{createDate}</if>
+			<if test="modifyUser != null and modifyUser != ''">and modify_user = #{modifyUser}</if>
+			<if test="modifyDate != null and modifyDate != ''">and modify_date = #{modifyDate}</if>
+			<if test="deleteFlag != null and deleteFlag != ''">and delete_flag = #{deleteFlag}</if>
+		</trim>
+	</sql>
+	
+	<select id="search" resultMap="maticResultMap" parameterType="Matic">
+		select <include refid="table_columns" />
+		from matic
+		<include refid="page_where" />
+	</select>
+	
+	<select id="page" resultMap="maticResultMap" parameterType="Matic">
+		select <include refid="table_columns" />
+		from matic
+		<include refid="page_where" />
+		limit #{firstIndex},#{pageSize}
+	</select>
+
+    <select id="count" resultType="long" parameterType="Matic">
+        select count(id) from matic
+        <include refid="page_where" />
+    </select>
+
+	<!-- 閸忔湹绮懛顏勭暰娑斿QL -->
+	
+</mapper>

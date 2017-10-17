@@ -1,0 +1,5 @@
+.goods-ids{}
+.goods-ids ul{list-style: none;margin:0px;padding:0px;margin-left:5px;}
+#ui-datepicker-div{z-index: 13 !important;}
+.goods-ids ul li{height:100px;width:100px;vertical-align:middle;cursor:pointer;text-align:center;line-height: 25px;float:left;border:solid #CCC 1px;border-radius: 3px;margin:20px 20px 0px 0px;}
+.check-page-result{background-color:#CCC;text-align: center;padding:20px;max-width:100%;}

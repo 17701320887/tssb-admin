@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tssb.dao.IMaticReportDao">
+	<resultMap type="MaticReport" id="maticReportResultMap">
+		<result property="id" column="id" />
+		<result property="maticId" column="matic_id" />
+		<result property="reportId" column="report_id" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		id,
+		matic_id,
+		report_id
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{maticId},
+		#{reportId}
+	</sql>
+	
+	<!-- 闁倻鏁ゆ禍搴濆瘜闁款喛鍤滄晶鐐佃閸拷-->
+	<insert id="save" parameterType="MaticReport" useGeneratedKeys="true" keyProperty="id">
+		insert into matic_report( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+	
+	<delete id="deleteByIds">
+		delete from matic_report
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="MaticReport">
+		update matic_report 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="maticId != null and maticId != ''">matic_id = #{maticId},</if>
+			<if test="reportId != null and reportId != ''">report_id = #{reportId},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<select id="findById" resultMap="maticReportResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from matic_report
+		where id = #{id}
+	</select>
+	
+	<select id="queryAll" resultMap="maticReportResultMap">
+		select <include refid="table_columns" /> 
+		from matic_report
+	</select>
+	
+	<!-- 娴ｈ法鏁ike閻€劍纭堕敍姝漮lumnName like concat('%',#columnName#,'%') -->
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="maticId != null and maticId != ''">and matic_id = #{maticId}</if>
+			<if test="reportId != null and reportId != ''">and report_id = #{reportId}</if>
+		</trim>
+	</sql>
+	
+	<select id="search" resultMap="maticReportResultMap" parameterType="MaticReport">
+		select <include refid="table_columns" />
+		from matic_report
+		<include refid="page_where" />
+	</select>
+	
+	<select id="page" resultMap="maticReportResultMap" parameterType="MaticReport">
+		select <include refid="table_columns" />
+		from matic_report
+		<include refid="page_where" />
+		limit #{firstIndex},#{pageSize}
+	</select>
+
+    <select id="count" resultType="long" parameterType="MaticReport">
+        select count(id) from matic_report
+        <include refid="page_where" />
+    </select>
+
+	<!-- 閸忔湹绮懛顏勭暰娑斿QL -->
+	
+</mapper>

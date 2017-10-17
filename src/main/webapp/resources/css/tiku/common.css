@@ -1,0 +1,35 @@
+.ti-content{clear:both;overflow: hidden;}
+.clear{clear:both;}
+ul{padding:0px;margin:0px;}
+input{vertical-align: top;}
+.txt-left{text-align: left;}
+.txt-center{text-align: center;}
+.txt-right{text-align: right;}
+.cur_pointer{cursor:pointer;}
+.row-md{min-height: 35px;padding:3px;list-style: none;margin:0px;padding:0px;margin-bottom:8px;}
+.row-li li {padding:0px;margin:0px;}
+.row-column{float:left;margin:0px;padding:0px;min-height: 30px;}
+.left-wh-10{margin-left: 10px;}
+.left-wh-20{margin-left: 20px;}
+.txt-hg-30{line-height: 30px;}
+.cln-2{width:2%;}
+.cln-5{width:5%;}
+.cln-10{width:10%;}
+.cln-15{width:15%;}
+.cln-20{width:20%;}
+.cln-25{width:25%;}
+.cln-30{width:30%;}
+.cln-35{width:35%;}
+.cln-40{width:40%;}
+.cln-45{width:45%;}
+.cln-50{width:50%;}
+.cln-55{width:55%;}
+.cln-60{width:60%;}
+.cln-65{width:65%;}
+.cln-70{width:70%;}
+.cln-75{width:75%;}
+.cln-80{width:80%;}
+.cln-85{width:85%;}
+.cln-90{width:90%;}
+.cln-95{width:95%;}
+.cln-100{width:100%;}
