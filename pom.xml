@@ -23,7 +23,6 @@
     <scm.git.url.http>http://182.92.229.11/java-trunk/duia-web-trunk.git</scm.git.url.http>
     <nexus.url>http://106.39.118.131:8081/nexus</nexus.url>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>

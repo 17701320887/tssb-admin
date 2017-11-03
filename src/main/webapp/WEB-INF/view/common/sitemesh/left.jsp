@@ -36,7 +36,7 @@
                 <span>新闻管理</span>
             </a>
             <ul class="sub-menu">
-                <li name="sub"><a href="/system/userList">新闻管理</a></li>
+                <li name="sub"><a href="/matic/index">新闻管理</a></li>
             </ul>
         </li>
         <li class="has-sub">

@@ -5,6 +5,7 @@
 		<result property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
+		<result property="imgUrl" column="img_url" />
 		<result property="topStatus" column="top_status" />
 		<result property="sticeStatus" column="stice_status" />
 		<result property="createUser" column="create_user" />
@@ -18,6 +19,7 @@
 		id,
 		title,
 		content,
+		img_url,
 		top_status,
 		stice_status,
 		create_user,
@@ -30,6 +32,7 @@
 		#{id},
 		#{title},
 		#{content},
+		#{imgUrl},
 		#{topStatus},
 		#{sticeStatus},
 		#{createUser},
@@ -58,6 +61,7 @@
 		<trim prefix="set" suffixOverrides=",">
 			<if test="title != null and title != ''">title = #{title},</if>
 			<if test="content != null and content != ''">content = #{content},</if>
+			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
 			<if test="topStatus != null and topStatus != ''">top_status = #{topStatus},</if>
 			<if test="sticeStatus != null and sticeStatus != ''">stice_status = #{sticeStatus},</if>
 			<if test="createUser != null and createUser != ''">create_user = #{createUser},</if>
@@ -85,6 +89,7 @@
 		<trim prefix="where" prefixOverrides="and | or ">
 			<if test="title != null and title != ''">and title = #{title}</if>
 			<if test="content != null and content != ''">and content = #{content}</if>
+			<if test="imgUrl != null and imgUrl != ''">and img_url = #{imgUrl}</if>
 			<if test="topStatus != null and topStatus != ''">and top_status = #{topStatus}</if>
 			<if test="sticeStatus != null and sticeStatus != ''">and stice_status = #{sticeStatus}</if>
 			<if test="createUser != null and createUser != ''">and create_user = #{createUser}</if>

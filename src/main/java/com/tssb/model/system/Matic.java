@@ -18,7 +18,8 @@ public class Matic extends BaseEntity {
 	
 	
 	private String	title;		
-	private String	content;		
+	private String	content;
+	private String 	imgUrl;
 	private Integer	topStatus;		
 	private Integer	sticeStatus;		
 	private Integer	createUser;		
@@ -115,7 +116,15 @@ public class Matic extends BaseEntity {
 		this.deleteFlag = deleteFlag;
 		return this;
 	}
-	
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "Matic [" + "id=" + getId() + ", title=" + title + ", content=" + content + ", topStatus=" + topStatus + ", sticeStatus=" + sticeStatus + ", createUser=" + createUser + ", createDate=" + createDate + ", modifyUser=" + modifyUser + ", modifyDate=" + modifyDate + ", deleteFlag=" + deleteFlag +  "]";

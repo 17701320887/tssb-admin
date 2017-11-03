@@ -24,12 +24,11 @@ import java.util.*;
  * Created by dutianzhao on 2015/7/20.
  */
 public class ImageUtil {
-
     private final static Logger logger = LoggerFactory.getLogger(ImageUtil.class);
     /**
      * 上传个人图像并重命名，图像大小不得超过5M
      */
-    public static Map<String,Object> uploadUserHeadImg(MultipartFile mf,HttpSession session) {
+    public static Map<String,Object> uploadUserHeadImg(MultipartFile mf, HttpSession session, String imageServiceRealPath, String userHeadPicturePath, String imagePath) {
         Map<String,Object> map=new HashMap<String, Object>();
         try {
             if(mf.getSize()>1024*1024*5){
@@ -50,8 +49,7 @@ public class ImageUtil {
                 SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmssS", Locale.US);
                 String catePath=DateUtils.dateToString(new Date(),"yyyyMMdd")+"/";
                 String newFileName=new String(format.format(currTime).getBytes("UTF-8")) + mf.getOriginalFilename();
-
-                File file=new File(ParamUtil.imageServiceRealPath + ParamUtil.userHeadPicturePath + catePath);
+                File file=new File(imageServiceRealPath + userHeadPicturePath + catePath);
                 if(!file.exists() && file.isDirectory()){
                     file.mkdirs();
                 }
@@ -61,11 +59,11 @@ public class ImageUtil {
                 modifyFileName += getRandom5();
                 modifyFileName += newFileName.substring(newFileName.indexOf('.'),newFileName.length());
                 /*修改头像地址结束*/
-                String realPath=ParamUtil.imageServiceRealPath + ParamUtil.userHeadPicturePath + catePath + modifyFileName;
+                String realPath=imageServiceRealPath + userHeadPicturePath + catePath + modifyFileName;
                 FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(realPath));
                 //scaleNoWhite(new File(realPath),realPath,320,320);
-                String relativePath= ParamUtil.userHeadPicturePath + catePath + modifyFileName;
-                String webPath=ParamUtil.imageServicePath + ParamUtil.userHeadPicturePath + catePath +modifyFileName;
+                String relativePath= userHeadPicturePath + catePath + modifyFileName;
+                String webPath=imagePath + "/" + userHeadPicturePath + catePath +modifyFileName;
                 map.put("success", 1);
                 map.put("message", "上传成功!");
                 map.put("relativePath", relativePath);
