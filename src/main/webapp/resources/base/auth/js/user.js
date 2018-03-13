@@ -11,8 +11,8 @@ $("#saveUser").click(function(){
         sex = setSwitch.bootstrapSwitch("offText");
     }
     var datas = {"name":$.trim($("#username").val()),"mobile":$.trim($("#usermobile").val()),"wxNo":$.trim($("#userWxNo").val()),"sex":sex,
-        "workNo":$.trim($("#workNo").val()),"bigImg":"temp/duia.png","smallImg":"temp/duia.png"};
-    console.log(datas);
+        "workNo":$.trim($("#workNo").val()),"role":$("input[name='role']:checked").val(),"bigImg":"temp/duia.png","smallImg":"temp/duia.png"};
+    console.error(datas);
     $.ajax({
         url:path+"/system/user/save",
         type:"post",

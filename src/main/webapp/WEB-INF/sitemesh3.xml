@@ -9,4 +9,5 @@
     <mapping path="/index" decorator="/WEB-INF/view/common/sitemesh/main.jsp"/>
     <mapping path="/system/*" decorator="/WEB-INF/view/common/sitemesh/main.jsp"/>
     <mapping path="/matic/*" decorator="/WEB-INF/view/common/sitemesh/main.jsp"/>
+    <mapping path="/menu" decorator="/WEB-INF/view/common/sitemesh/main.jsp"/>
 </sitemesh>

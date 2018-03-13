@@ -55,6 +55,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户权限*</label>
+                        <div class="col-md-9">
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" id="inlineRadio1" value="1" style="margin-top: 1.5px;" checked> 超级管理员
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" id="inlineRadio2" value="2" style="margin-top: 1.5px;"> 主编
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="role" id="inlineRadio3" value="3" style="margin-top: 1.5px;"> 普通
+                                </label>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

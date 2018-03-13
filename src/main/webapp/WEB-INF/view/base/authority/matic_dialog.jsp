@@ -21,6 +21,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">模式</label>
+                        <div class="col-md-9">
+                            <label class="radio-inline">
+                                <input type="radio" name="maticType" id="inlineRadio1" value="option1" style="margin-top: 1.5px;" checked> 1
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="maticType" id="inlineRadio2" value="option2" style="margin-top: 1.5px;"> 2
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="maticType" id="inlineRadio3" value="option3" style="margin-top: 1.5px;"> 3
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label">内容</label>
                         <div class="col-md-9">
                             <textarea id="content" class="form-control" rows="10">

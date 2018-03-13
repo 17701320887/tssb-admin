@@ -23,7 +23,7 @@ public class Users extends BaseEntity {
 	private String	mobile;		
 	private String	workNo;		
 	private Integer	sex;		
-	private Integer	status;		
+	private Integer	role;		/*1:管理员 2.主编 3.普通*/
 	private Integer	createUser;		
 	private Date	createDate;		
 	private Integer	modifyUser;		
@@ -92,12 +92,12 @@ public class Users extends BaseEntity {
 	}
 	
 	
-	public Integer getStatus() {
-		return status;
+	public Integer getRole() {
+		return role;
 	}
 
-	public Users setStatus(Integer status) {
-		this.status = status;
+	public Users setRole(Integer role) {
+		this.role = role;
 		return this;
 	}
 	
@@ -151,6 +151,6 @@ public class Users extends BaseEntity {
 	
 	@Override
 	public String toString() {
-		return "Users [" + "id=" + getId() + ", name=" + name + ", password=" + password + ", wxNo=" + wxNo + ", mobile=" + mobile + ", workNo=" + workNo + ", sex=" + sex + ", status=" + status + ", createUser=" + createUser + ", createDate=" + createDate + ", modifyUser=" + modifyUser + ", modifyDate=" + modifyDate + ", deleteFlag=" + deleteFlag +  "]";
+		return "Users [" + "id=" + getId() + ", name=" + name + ", password=" + password + ", wxNo=" + wxNo + ", mobile=" + mobile + ", workNo=" + workNo + ", sex=" + sex + ", role=" + role + ", createUser=" + createUser + ", createDate=" + createDate + ", modifyUser=" + modifyUser + ", modifyDate=" + modifyDate + ", deleteFlag=" + deleteFlag +  "]";
 	}
 }

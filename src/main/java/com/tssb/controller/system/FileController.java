@@ -31,7 +31,7 @@ import java.util.UUID;
 public class FileController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Value("${file.upload.server.path}")
+    /*@Value("${file.upload.server.path}")
     private String realPath;
     @Value("${file.upload.size.max.image}")
     private int imageFileMaxSize;
@@ -39,9 +39,9 @@ public class FileController {
     private String imgPath;
     @Value("${file.upload.server.user.head.path}")
     private String userHeadPath;
-    /***
+    *//***
      * 上传图片,大小限制为5M
-     */
+     *//*
     @RequestMapping(value="/uploadImg",produces = {"text/html;charset=UTF-8"})
     @ResponseBody
     public String uploadImg(MultipartFile imgFile, HttpServletRequest request){
@@ -61,9 +61,9 @@ public class FileController {
         }
     }
 
-    /**
+    *//**
      * 剪切图片
-     */
+     *//*
     @RequestMapping(value="/cutImg")
     @ResponseBody
     public Map<String,Object> cutImg(String relativePath,Integer x,Integer y,Integer width,Integer height,HttpServletRequest request){
@@ -94,5 +94,5 @@ public class FileController {
             map.put("message", "上传失败!");
         }
         return map;
-    }
+    }*/
 }

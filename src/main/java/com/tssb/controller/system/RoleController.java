@@ -1,6 +1,8 @@
 package com.tssb.controller.system;
 
+import com.tssb.model.system.NewsMenu;
 import com.tssb.model.system.Users;
+import com.tssb.service.system.spi.INewsMenuService;
 import com.tssb.service.system.spi.IRoleService;
 import com.tssb.service.system.spi.IUsersService;
 import net.sf.json.JSONObject;
@@ -24,11 +26,14 @@ public class RoleController {
 	private IRoleService roleService;
 	@Autowired
 	private IUsersService usersService;
+	@Autowired
+	private INewsMenuService newsMenuService;
 
 	@RequestMapping(value="/index", method = RequestMethod.GET)
 	public String show(Model model) {
 		List<Users> usersList = usersService.findAll();
 		model.addAttribute("usersList",usersList);
+		model.addAttribute("page_flag",1);
 		return "index";
 	}
 
@@ -42,7 +47,8 @@ public class RoleController {
 				if(user.getPassword().equals(password)){
 					jsonObject.put("code","200");
 					jsonObject.put("user_id",user.getId());
-				}else{
+                    jsonObject.put("user_role",user.getRole());
+                }else{
 					jsonObject.put("code","201");
 				}
 			}else{
@@ -53,5 +59,13 @@ public class RoleController {
 			jsonObject.put("code","500");
 		}
 		return jsonObject;
+	}
+
+	@RequestMapping(value="/menu", method = RequestMethod.GET)
+	public String showMenu(Model model) {
+		List<NewsMenu> newsMenuList = newsMenuService.findAll();
+		model.addAttribute("newsMenuList",newsMenuList);
+		model.addAttribute("page_flag",2);
+		return "/system/menuList";
 	}
 }

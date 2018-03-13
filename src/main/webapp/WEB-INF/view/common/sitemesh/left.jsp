@@ -19,34 +19,35 @@
     <%-- begin sidebar nav --%>
     <ul class="nav">
         <li class="nav-header">菜单列表</li>
-        <li class="has-sub active">
+        <li class="has-sub <c:if test="${page_flag == 1 || page_flag == 2}">active</c:if>">
             <a href="javascript:;">
                 <i class="fa fa-2x fa-asterisk"></i>
                 <b class="caret pull-right"></b>
                 <span>系统管理</span>
             </a>
             <ul class="sub-menu">
-                <li name="sub" class="active"><a href="/index">用户管理</a></li>
+                <li name="sub" class="<c:if test="${page_flag == 1}">active</c:if>"><a href="/index">用户管理</a></li>
+                <li name="sub" class="<c:if test="${page_flag == 2}">active</c:if>"><a href="/menu">类目管理</a></li>
             </ul>
         </li>
-        <li class="has-sub">
+        <li class="has-sub <c:if test="${page_flag == 10}">active</c:if>">
             <a href="javascript:;">
                 <i class="fa fa-2x fa-asterisk"></i>
                 <b class="caret pull-right"></b>
                 <span>新闻管理</span>
             </a>
             <ul class="sub-menu">
-                <li name="sub"><a href="/matic/index">新闻管理</a></li>
+                <li name="sub" class="<c:if test="${page_flag == 10}">active</c:if>"><a href="/matic/index">新闻管理</a></li>
             </ul>
         </li>
-        <li class="has-sub">
+        <li class="has-sub <c:if test="${page_flag == 20}">active</c:if>">
             <a href="javascript:;">
                 <i class="fa fa-2x fa-asterisk"></i>
                 <b class="caret pull-right"></b>
-                <span>提问管理</span>
+                <span>审核管理</span>
             </a>
             <ul class="sub-menu">
-                <li name="sub"><a href="/system/userList">审核管理</a></li>
+                <li name="sub" class="<c:if test="${page_flag == 20}">active</c:if>"><a href="/matic/auditShow">审核管理</a></li>
             </ul>
         </li>
         <%-- begin sidebar minify button --%>
@@ -56,7 +57,4 @@
     <%-- end sidebar nav --%>
 </div>
 <%-- end sidebar scrollbar --%>
-<script>
-    $("li[name=sub][class=active]").parent().parent().addClass("active");
-</script>
 

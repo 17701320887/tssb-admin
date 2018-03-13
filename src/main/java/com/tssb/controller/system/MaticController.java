@@ -31,6 +31,7 @@ public class MaticController {
 	public String show(Model model) {
 		List<Users> usersList = usersService.findAll();
 		model.addAttribute("usersList",usersList);
+		model.addAttribute("page_flag",10);
 		return "system/maticList";
 	}
 
@@ -56,4 +57,12 @@ public class MaticController {
 		}
 		return jsonObject;
 	}
+
+    @RequestMapping(value="/auditShow", method = RequestMethod.GET)
+    public String auditShow(Model model) {
+        List<Users> usersList = usersService.findAll();
+        model.addAttribute("usersList",usersList);
+        model.addAttribute("page_flag",20);
+        return "system/auditList";
+    }
 }

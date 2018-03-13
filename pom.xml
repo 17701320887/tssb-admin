@@ -355,8 +355,11 @@
       <version>1.7.1.RELEASE</version>
     </dependency>
 
-
-
+    <dependency>
+      <groupId>cn.songxinqiang</groupId>
+      <artifactId>com.baidu.ueditor</artifactId>
+      <version>1.1.2-edit-1.0</version>
+    </dependency>
     <!--rabbitMQ-->
 
 

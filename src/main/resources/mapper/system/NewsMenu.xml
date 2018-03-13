@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tssb.model.system.NewsMenu">
+	<resultMap type="NewsMenu" id="newsMenuResultMap">
+		<result property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="codeName" column="code_name" />
+	</resultMap>
+
+	<sql id="table_columns">
+		id,
+		code,
+		code_name
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{code},
+		#{codeName}
+	</sql>
+
+	<!-- 适用于主键自增类型 -->
+	<!--
+	<delete id="deleteByIds">
+		delete from role
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<update id="update" parameterType="Role">
+		update role
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>-->
+
+	<insert id="save" parameterType="NewsMenu" useGeneratedKeys="true" keyProperty="id">
+		insert into news_menu( <include refid="table_columns" /> )
+		values ( <include refid="entity_properties" /> )
+	</insert>
+
+	<select id="findById" resultType="String" parameterType="Long">
+		select r.name
+		from role r
+		where r.id=#{id}
+	</select>
+
+	<select id="findAll" resultMap="newsMenuResultMap">
+		select <include refid="table_columns" />
+		from news_menu
+	</select>
+</mapper>

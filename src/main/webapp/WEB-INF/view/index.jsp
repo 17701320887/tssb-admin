@@ -19,7 +19,7 @@
                         <%--     <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                              <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>--%>
                     </div>
-                    <h4 class="panel-title">员工列表</h4>
+                    <h4 class="panel-title">用户列表</h4>
                 </div>
                 <div class="panel-body">
                     <form action="/system/findUserList" method="get" class="form-inline">
@@ -41,10 +41,10 @@
                             <input type="text" class="form-control"  style="width:220px;" id="name" name="name" placeholder="用户姓名" value="${name}" />
                         </div>
                         <div class="form-group m-r-10">
-                            <input type="text" class="form-control" style="width:220px;" id="mobile" name="mobile" placeholder="用户手机" value="${wxNo}" />
+                            <input type="text" class="form-control" style="width:220px;" id="mobile" name="mobile" placeholder="用户手机" value="${mobile}" />
                         </div>
                         <div class="form-group m-r-10">
-                            <input type="text" class="form-control"  style="width:220px;"  id="wxNo" name="wxNo" placeholder="用户微信" value="${mobile}" />
+                            <input type="text" class="form-control"  style="width:220px;"  id="wxNo" name="wxNo" placeholder="用户微信" value="${wxNo}" />
                         </div>
                       <%--  <div class="form-group  m-r-10" >
                             <div class="input-group">
